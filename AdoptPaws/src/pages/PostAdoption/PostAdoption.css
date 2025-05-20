@@ -1,0 +1,52 @@
+.class {
+  background-color: #efefef;
+  width: 100vw;
+  height: 100vh;
+  color: black;
+}
+
+.InputDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  width: 700px;
+  gap: 5px;
+  font-size: 14px;
+  
+}
+.boxInput{
+  background-color: #ffffff;
+  border: #524e4e 1px solid;
+  color: #524e4e;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  padding-left: 10px;
+}
+.Body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 30px;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  overlay: none;
+  padding-left: 12px;
+  outline: none;
+}
+
+.Picture {
+  border: blue 1px solid;
+  height: 300px;
+  width: 500px;
+}
+
+.Forms {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
