@@ -1,0 +1,53 @@
+.DropDown {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  gap: 5px;
+  position: absolute;
+  z-index: 3;
+  padding: 5px 0px 5px 0px;
+}
+
+.DropDown button {
+  background-color: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  text-overflow: ellipsis; /* adiciona ... se o texto for muito grande */
+  white-space: nowrap;
+  width: 100%;
+}
+
+.DropDown button:hover {
+  border: var(--tertiary-color) 1px solid;
+}
+
+.DropDown button:focus {
+  border: var(--tertiary-color) 1px solid;
+}
+
+.DropDown::-webkit-scrollbar {
+  width: 8px;
+  background: #f0f0f0;
+}
+
+.DropDown::-webkit-scrollbar-thumb {
+  background: #bdbdbd;
+  border-radius: 8px;
+}
+
+.DropDown::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+/* Para Firefox */
+.DropDown {
+  scrollbar-width: thin;
+  scrollbar-color: #bdbdbd #f0f0f0;
+}
