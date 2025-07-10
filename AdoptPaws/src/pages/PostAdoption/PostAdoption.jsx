@@ -77,11 +77,11 @@ function PostAdoption() {
       form.append("petData", JSON.stringify(formData));
 
       // Adiciona todas as imagens selecionadas
-      // selectedImages.forEach((image) => {
-      //   form.append("images", image);
-      // });
+      selectedImages.forEach((image) => {
+        form.append("images", image);
+      });
 
-      const response = await fetch("http://localhost:3000/api/pets", {
+      const response = await fetch("http://localhost:3000/profile/create", {
         method: "POST",
         body: form,
       });
@@ -131,7 +131,7 @@ function PostAdoption() {
     const files = Array.from(e.target.files);
 
     // serve para limitar a quantidade de arquivos, nesse caso o máximo é 5
-    if (files.length > 5) {
+    if (previewUrls.length > 4) {
       alert("Máximo de 5 imagens permitidas");
       return;
     }
@@ -144,12 +144,15 @@ function PostAdoption() {
       }
       return true;
     });
-    setSelectedImages(validFiles);
+
+    const updatedImages = [...selectedImages, ...validFiles];
+    setSelectedImages(updatedImages);
 
     // cria a url das imagens, nota que são url temporarias para exibir no preview
-    const urls = validFiles.map((file) => URL.createObjectURL(file));
-    setPreviewUrls(urls);
-    console.log(urls);
+    const newUrls = validFiles.map((file) => URL.createObjectURL(file));
+    const updatedUrls = [...previewUrls, ...newUrls];
+    setPreviewUrls(updatedUrls);
+
   };
 
   return (
@@ -159,25 +162,25 @@ function PostAdoption() {
       </span>
       <div className="Body">
         <div className="flex flex-col gap-4">
-          <div className={previewUrls.length > 0 ? "Picture has-image" : "Picture"}>
-            <input
-              type="file"
-              id="imageUpload"
-              multiple
-              accept="image/*,image/jpeg,image/jpg,image/png,image/gif,image/webp"
-              onChange={handleImageChange}
-            />
-              {/* ultima imagem adicionada */}
+          <div
+            className={previewUrls.length > 0 ? "Picture has-image" : "Picture"}
+          >
+            {/* ultima imagem adicionada */}
             {previewUrls.length > 0 ? (
               <div className="imagemPreviewContainer">
-                {previewUrls.map((url, index) => (
-                  <div key={index} className="imagePreview">
-                    <img src={url} alt={`Preview ${index + 1}`} />
-                  </div>
-                ))}
+                <div className="imagePreview">
+                  <img src={previewUrls[previewUrls.length - 1]} alt={""} />
+                </div>
               </div>
             ) : (
               <label htmlFor="imageUpload" className="uploadLabel">
+                <input
+                  type="file"
+                  id="imageUpload"
+                  multiple
+                  accept="image/*,image/jpeg,image/jpg,image/png,image/gif,image/webp"
+                  onChange={handleImageChange}
+                />
                 <div className="iconsPicture">
                   <img src={Camera} alt="" />
                   <img src={Image} alt="" />
@@ -187,9 +190,18 @@ function PostAdoption() {
             )}
           </div>
 
-            {/* miniatura das imagens */}
-          {previewUrls.length > 0 ? (
+          {/* exibi a miniatura das imagens anterior */}
+          {previewUrls.length > 0 && (
             <div className="listImages">
+              {/* exibi TODAS as imagens */}
+              {previewUrls.slice(0, -1).map((url, index) => (
+                <div className="addMoreImage">
+                  <img src={url} alt={`Thumbnail ${index + 1}`} />
+                </div>
+              ))}
+
+              {/* Botão para adicionar mais imagens */}
+              {previewUrls.length < 5 && (
                 <div className="addMoreImage">
                   <input
                     type="file"
@@ -198,10 +210,13 @@ function PostAdoption() {
                     accept="image/*,image/jpeg,image/jpg,image/png,image/gif,image/webp"
                     onChange={handleImageChange}
                   />
-                  <img src={Plus} alt="" />
+                  <label htmlFor="AddMoreImage">
+                    <img src={Plus} alt="Adicionar mais imagens" />
+                  </label>
                 </div>
-              </div>
-          ) : (<></>)}
+              )}
+            </div>
+          )}
         </div>
 
         <form>
